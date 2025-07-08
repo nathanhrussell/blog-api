@@ -20,7 +20,7 @@ export async function getPublishedById(req, res) {
   res.json(post);
 }
 
-export async function CreatePost(req, res) {
+export async function createPost(req, res) {
     const { title, content } = req.body;
     const userId = req.user.id;
 
