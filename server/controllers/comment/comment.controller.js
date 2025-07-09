@@ -4,13 +4,28 @@ const prisma = new PrismaClient();
 
 export async function getCommentsByPost(req, res) {
   const postId = parseInt(req.params.id);
-  const comments = await prisma.comment.findMany({
-    where: { postId },
-    include: { user: true },
-    orderBy: { createdAt: "desc" }
-  });
-  res.json(comments);
+
+  try {
+    const comments = await prisma.comment.findMany({
+      where: { postId },
+      include: { user: true },
+      orderBy: { createdAt: "desc" }
+    });
+
+    const formatted = comments.map(comment => ({
+      id: comment.id,
+      content: comment.content,
+      username: comment.user?.username || "Anonymous",
+      createdAt: comment.createdAt
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Failed to fetch comments:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 }
+
 
 export async function createComment(req, res) {
   const postId = parseInt(req.params.id);

@@ -48,14 +48,18 @@ function fetchComments() {
         {comments.length === 0 ? (
           <p className="text-gray-600">No comments yet.</p>
         ) : (
-          <ul className="space-y-2 mb-6">
-            {comments.map(comment => (
-              <li key={comment.id} className="bg-white p-3 shadow rounded">
-                <strong>{comment.username}</strong>
-                <p>{comment.content}</p>
-              </li>
-            ))}
-          </ul>
+        <ul className="space-y-2 mb-6">
+          {comments.map(comment => (
+            <li key={comment.id} className="bg-white p-3 shadow rounded">
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold text-gray-900">User:</span> {comment.username}
+              </p>
+              <p className="text-sm text-gray-700">
+                <span className="font-semibold text-gray-900">Comment:</span> {comment.content}
+              </p>
+            </li>
+          ))}
+        </ul>
         )}
         <CommentForm postId={id} onCommentSubmitted={fetchComments} />
       </section>
