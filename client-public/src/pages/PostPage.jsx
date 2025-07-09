@@ -20,7 +20,11 @@ function fetchComments() {
 
   return (
     <main className="p-6 max-w-3xl mx-auto space-y-4">
-      <h1 className="text-3xl font-bold">{post.title}</h1>
+      <Link to={`/posts/${post.id}`}>
+  <h1 className="text-xl font-bold text-blue-600 hover:underline">
+    {post.title}
+  </h1>
+</Link>
       <p>{post.content}</p>
       <section className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Comments</h2>

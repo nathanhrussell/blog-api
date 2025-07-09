@@ -27,7 +27,11 @@ useEffect(() => {
       {posts.length === 0 && <p>No posts yet.</p>}
       {posts.map(post => (
         <div key={post.id} className="border p-4 rounded bg-white shadow">
-          <h2 className="text-xl font-bold">{post.title}</h2>
+              <Link to={`/posts/${post.id}`}>
+      <h2 className="text-xl font-bold text-blue-600 hover:underline">
+        {post.title}
+      </h2>
+    </Link>
           <p className="text-gray-600">{post.content.slice(0, 100)}...</p>
           <Link to={`/posts/${post.id}`} className="text-blue-500 underline">
             Read more
