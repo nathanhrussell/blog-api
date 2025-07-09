@@ -5,11 +5,14 @@ import postRoutes from "./routes/post/post.routes.js";
 import authRoutes from "./routes/auth/auth.routes.js";
 import commentRoutes from "./routes/comment/comment.routes.js";
 import { errorHandler } from "../middlewares/errorHandler.js";
+import { formatResponse } from "../middlewares/formatResponse.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+app.use(formatResponse);
 
 app.use(cors());
 app.use(express.json());
