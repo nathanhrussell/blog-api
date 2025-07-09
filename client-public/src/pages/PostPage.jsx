@@ -9,16 +9,17 @@ function PostPage() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
 
-  useEffect(() => {
-    getPostById(id)
-      .then((data) => {
-        console.log("Fetched post:", data);  // Add this
-        setPost(data);
-      })
-      .catch(console.error);
+useEffect(() => {
+  getPostById(id)
+    .then(data => {
+      console.log("Fetched post:", data);
+      setPost(data);                        
+    })
+    .catch(console.error);
 
-    fetchComments();
-  }, [id]);
+  fetchComments();
+}, [id]);
+
 
 if (!post) return <p className="p-6">Loading...</p>;
 

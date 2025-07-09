@@ -6,10 +6,11 @@ export async function getPublishedPosts() {
     return res.json();
 }
 
-export async function getPostById(id) {
-    const res = await fetch(`http://localhost:5000/api/posts/${id}`);
-    if (!res.ok) throw new Error("Failed to fetch post");
-    return res.json();
+export async function getPostById(postId) {
+  const res = await fetch(`http://localhost:5000/api/posts/${postId}`);
+  if (!res.ok) throw new Error("Failed to fetch post");
+  const json = await res.json();
+  return json.data;
 }
 
 export async function getCommentsByPostId(postId) {
