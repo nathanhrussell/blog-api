@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPostById, getCommentsByPostId } from "../api/posts";
 import CommentForm from "../components/CommentForm";
+import { Link } from "react-router-dom";
 
 function PostPage() {
   const { id } = useParams();
@@ -9,13 +10,28 @@ function PostPage() {
   const [comments, setComments] = useState([]);
 
   useEffect(() => {
-    getPostById(id).then(setPost).catch(console.error);
+    getPostById(id)
+      .then((data) => {
+        console.log("Fetched post:", data);  // Add this
+        setPost(data);
+      })
+      .catch(console.error);
+
     fetchComments();
   }, [id]);
 
+if (!post) return <p className="p-6">Loading...</p>;
+
+
 function fetchComments() {
-  getCommentsByPostId(id).then(setComments).catch(console.error);
+  getCommentsByPostId(id)
+    .then(response => {
+      console.log("Fetched comments:", response.data);
+      setComments(response.data);
+    })
+    .catch(console.error);
 }
+
   if (!post) return <p className="p-6">Loading...</p>;
 
   return (
