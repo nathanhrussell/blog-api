@@ -1,12 +1,10 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Home from "./pages/Home";
 
 function App() {
   return (
-    <div className="p-6 text-center bg-red-500">
-      <h1 className="text-3xl font-bold text-white">Tailwind working!</h1>
+    <div className="min-h-screen bg-gray-50">
+      <Home />
     </div>
   );
 }
