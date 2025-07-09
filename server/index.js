@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import postRoutes from "./routes/post/post.routes.js";
 import authRoutes from "./routes/auth/auth.routes.js";
 import commentRoutes from "./routes/comment/comment.routes.js";
-import { errorHandler } from "../middlewares/errorHandler.js";
-import { formatResponse } from "../middlewares/formatResponse.js";
+import { errorHandler } from '../middlewares/errorHandler.mjs';
+import { formatResponse } from '../middlewares/formatResponse.mjs';
 
 dotenv.config();
 

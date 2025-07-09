@@ -1,7 +1,7 @@
 import express from "express";
 
 import { register, login } from "../../controllers/auth/auth.controller.js"
-import { requireFields } from "../../../middlewares/validate.js";
+import { requireFields } from '../../../middlewares/validate.mjs';
 
 const router = express.Router();
 
