@@ -74,3 +74,18 @@ export async function getAllByAuthor(req, res) {
   console.log(`✅ Posts returned: ${posts.length}`);
   res.json(posts);
 }
+
+export async function getPostById(req, res) {
+  const postId = parseInt(req.params.id);
+  const userId = req.user.id;
+
+  const post = await prisma.post.findFirst({
+    where: {
+      id: postId,
+      authorId: userId,
+    },
+  });
+
+  if (!post) return res.status(404).json({ error: "Post not found" });
+  res.json(post);
+}

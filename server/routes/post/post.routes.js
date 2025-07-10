@@ -10,6 +10,7 @@ import {
 } from "../../controllers/post/post.controller.js";
 
 import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.middleware.js";
+import { getPostById } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
@@ -21,6 +22,7 @@ router.put("/:id", authenticateUser, requireAuthorRole, updatePost);
 router.delete("/:id", authenticateUser, requireAuthorRole, deletePost);
 router.patch("/:id/publish", authenticateUser, requireAuthorRole, togglePublish);
 
-router.get("/posts", authenticateUser, getAllByAuthor)
+router.get("/posts", authenticateUser, getAllByAuthor);
+router.get("/posts/:id", authenticateUser, getPostById);
 
 export default router;
