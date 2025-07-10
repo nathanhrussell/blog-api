@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 
 function Dashboard({ onLogout }) {
   const [posts, setPosts] = useState([]);
+  const [message, setMessage] = useState(null);
+  const [error, setError] = useState(null);
 
   const fetchPosts = () => {
     fetch("http://localhost:5000/api/posts", {
@@ -12,18 +14,28 @@ function Dashboard({ onLogout }) {
     })
       .then((res) => res.json())
       .then((resJson) => {
-        console.log("Posts data:", resJson);
         setPosts(Array.isArray(resJson.data) ? resJson.data : []);
       })
       .catch((err) => {
         console.error("Error fetching posts:", err);
         setPosts([]);
+        showError("Failed to fetch posts.");
       });
   };
 
   useEffect(() => {
     fetchPosts();
   }, []);
+
+  const showMessage = (text, duration = 2000) => {
+    setMessage(text);
+    setTimeout(() => setMessage(null), duration);
+  };
+
+  const showError = (text, duration = 3000) => {
+    setError(text);
+    setTimeout(() => setError(null), duration);
+  };
 
   const handleDelete = async (postId) => {
     try {
@@ -33,9 +45,11 @@ function Dashboard({ onLogout }) {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
+      showMessage("Post deleted.");
       fetchPosts();
     } catch (err) {
       console.error("Failed to delete post", err);
+      showError("Error deleting post.");
     }
   };
 
@@ -49,15 +63,17 @@ function Dashboard({ onLogout }) {
         },
         body: JSON.stringify({ published: !post.published }),
       });
+      showMessage(post.published ? "Post unpublished." : "Post published.");
       fetchPosts();
     } catch (err) {
       console.error("Failed to toggle publish status", err);
+      showError("Error toggling publish status.");
     }
   };
 
   const handleEdit = (postId) => {
     console.log("Navigate to edit post:", postId);
-    // Or: window.location.href = `/edit/${postId}`;
+    // Future: window.location.href = `/edit/${postId}`;
   };
 
   return (
@@ -71,6 +87,20 @@ function Dashboard({ onLogout }) {
           Logout
         </button>
       </div>
+
+      {/* Success Message */}
+      {message && (
+        <div className="mb-4 p-3 bg-green-100 text-green-800 border border-green-400 rounded">
+          {message}
+        </div>
+      )}
+
+      {/* Error Message */}
+      {error && (
+        <div className="mb-4 p-3 bg-red-100 text-red-800 border border-red-400 rounded">
+          {error}
+        </div>
+      )}
 
       {!posts || posts.length === 0 ? (
         <p>No posts yet.</p>
