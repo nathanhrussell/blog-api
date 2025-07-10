@@ -1,7 +1,7 @@
 // src/pages/Dashboard.jsx
 import { useEffect, useState } from "react";
 
-function Dashboard() {
+function Dashboard({ onLogout }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -11,14 +11,29 @@ function Dashboard() {
       },
     })
       .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((err) => console.error("Error fetching posts:", err));
+      .then((data) => {
+        console.log("Posts data:", data);
+        setPosts(Array.isArray(data) ? data : []);
+      })
+      .catch((err) => {
+        console.error("Error fetching posts:", err);
+        setPosts([]);
+      });
   }, []);
 
   return (
     <main className="p-6 max-w-4xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Author Dashboard</h1>
-      {posts.length === 0 ? (
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold">Author Dashboard</h1>
+        <button
+          onClick={onLogout}
+          className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+        >
+          Logout
+        </button>
+      </div>
+      
+      {!posts || posts.length === 0 ? (
         <p>No posts yet.</p>
       ) : (
         <ul className="space-y-4">
