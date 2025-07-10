@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 function Dashboard({ onLogout }) {
   const [posts, setPosts] = useState([]);
 
-  useEffect(() => {
+  const fetchPosts = () => {
     fetch("http://localhost:5000/api/posts", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -19,8 +19,46 @@ function Dashboard({ onLogout }) {
         console.error("Error fetching posts:", err);
         setPosts([]);
       });
+  };
 
+  useEffect(() => {
+    fetchPosts();
   }, []);
+
+  const handleDelete = async (postId) => {
+    try {
+      await fetch(`http://localhost:5000/api/posts/${postId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      fetchPosts();
+    } catch (err) {
+      console.error("Failed to delete post", err);
+    }
+  };
+
+  const handleTogglePublish = async (post) => {
+    try {
+      await fetch(`http://localhost:5000/api/posts/${post.id}/publish`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ published: !post.published }),
+      });
+      fetchPosts();
+    } catch (err) {
+      console.error("Failed to toggle publish status", err);
+    }
+  };
+
+  const handleEdit = (postId) => {
+    console.log("Navigate to edit post:", postId);
+    // Or: window.location.href = `/edit/${postId}`;
+  };
 
   return (
     <main className="p-6 max-w-4xl mx-auto">
@@ -33,7 +71,7 @@ function Dashboard({ onLogout }) {
           Logout
         </button>
       </div>
-      
+
       {!posts || posts.length === 0 ? (
         <p>No posts yet.</p>
       ) : (
@@ -50,13 +88,22 @@ function Dashboard({ onLogout }) {
                 </p>
               </div>
               <div className="space-x-2">
-                <button className="text-sm px-3 py-1 bg-blue-600 text-white rounded">
+                <button
+                  className="text-sm px-3 py-1 bg-blue-600 text-white rounded"
+                  onClick={() => handleEdit(post.id)}
+                >
                   Edit
                 </button>
-                <button className="text-sm px-3 py-1 bg-yellow-500 text-white rounded">
+                <button
+                  className="text-sm px-3 py-1 bg-yellow-500 text-white rounded"
+                  onClick={() => handleTogglePublish(post)}
+                >
                   {post.published ? "Unpublish" : "Publish"}
                 </button>
-                <button className="text-sm px-3 py-1 bg-red-600 text-white rounded">
+                <button
+                  className="text-sm px-3 py-1 bg-red-600 text-white rounded"
+                  onClick={() => handleDelete(post.id)}
+                >
                   Delete
                 </button>
               </div>
