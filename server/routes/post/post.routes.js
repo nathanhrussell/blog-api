@@ -5,7 +5,8 @@ import {
     createPost,
     updatePost,
     deletePost,
-    togglePublish
+    togglePublish,
+    getAllByAuthor
 } from "../../controllers/post/post.controller.js";
 
 import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.middleware.js";
@@ -19,5 +20,7 @@ router.post("/", authenticateUser, requireAuthorRole, createPost);
 router.put("/:id", authenticateUser, requireAuthorRole, updatePost);
 router.delete("/:id", authenticateUser, requireAuthorRole, deletePost);
 router.patch("/:id/publish", authenticateUser, requireAuthorRole, togglePublish);
+
+router.get("/posts", authenticateUser, getAllByAuthor)
 
 export default router;

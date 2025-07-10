@@ -11,14 +11,15 @@ function Dashboard({ onLogout }) {
       },
     })
       .then((res) => res.json())
-      .then((data) => {
-        console.log("Posts data:", data);
-        setPosts(Array.isArray(data) ? data : []);
+      .then((resJson) => {
+        console.log("Posts data:", resJson);
+        setPosts(Array.isArray(resJson.data) ? resJson.data : []);
       })
       .catch((err) => {
         console.error("Error fetching posts:", err);
         setPosts([]);
       });
+
   }, []);
 
   return (
