@@ -9,5 +9,6 @@ router.post("/register", register)
 router.post("/login", login)
 
 router.post("/register", requireFields(["username", "password"]), register);
+router.post("/login", requireFields(["username", "password"]), login);
 
 export default router;
