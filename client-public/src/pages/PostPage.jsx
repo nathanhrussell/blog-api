@@ -9,39 +9,35 @@ function PostPage() {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
 
-useEffect(() => {
-  getPostById(id)
-    .then(data => {
-      console.log("Fetched post:", data);
-      setPost(data);                        
-    })
-    .catch(console.error);
+  useEffect(() => {
+    getPostById(id)
+      .then(data => {
+        console.log("Fetched post:", data);
+        setPost(data.data); // Extract post from data.data
+      })
+      .catch(console.error);
 
-  fetchComments();
-}, [id]);
+    fetchComments();
+  }, [id]);
 
-
-if (!post) return <p className="p-6">Loading...</p>;
-
-
-function fetchComments() {
-  getCommentsByPostId(id)
-    .then(response => {
-      console.log("Fetched comments:", response.data);
-      setComments(response.data);
-    })
-    .catch(console.error);
-}
+  function fetchComments() {
+    getCommentsByPostId(id)
+      .then(response => {
+        console.log("Fetched comments:", response.data);
+        setComments(response.data);
+      })
+      .catch(console.error);
+  }
 
   if (!post) return <p className="p-6">Loading...</p>;
 
   return (
     <main className="p-6 max-w-3xl mx-auto space-y-4">
       <Link to={`/posts/${post.id}`}>
-  <h1 className="text-xl font-bold text-blue-600 hover:underline">
-    {post.title}
-  </h1>
-</Link>
+        <h1 className="text-xl font-bold text-blue-600 hover:underline">
+          {post.title}
+        </h1>
+      </Link>
       <p>{post.content}</p>
       <section className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Comments</h2>
@@ -63,7 +59,6 @@ function fetchComments() {
         )}
         <CommentForm postId={id} onCommentSubmitted={fetchComments} />
       </section>
-
     </main>
   );
 }

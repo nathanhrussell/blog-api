@@ -9,7 +9,13 @@ useEffect(() => {
   getPublishedPosts()
     .then(response => {
       console.log("Fetched posts:", response);
-      setPosts(response.data); // 👈 THIS is the array
+      console.log("🧪 Full API response:", response);
+      const postsArray = Array.isArray(response.data)
+        ? response.data
+        : Array.isArray(response.data.data)
+        ? response.data.data
+        : [];
+      setPosts(postsArray);
     })
     .catch(error => {
       console.error("Error fetching posts:", error);
