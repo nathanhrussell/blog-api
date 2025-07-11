@@ -21,16 +21,7 @@ function PostForm({ mode, postId = null }) {
         });
 
         const resJson = await res.json();
-        console.log("✏️ Full response:", resJson);
-
-        let data;
-        if (resJson.data) {
-          data = resJson.data.data || resJson.data;
-        } else {
-          data = resJson;
-        }
-
-        console.log("✏️ Processed post data:", data);
+        const data = resJson?.data?.data || resJson?.data || resJson;
 
         if (data.error) {
           setError(data.error);

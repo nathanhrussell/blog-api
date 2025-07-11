@@ -7,29 +7,6 @@ function Dashboard({ onLogout }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-const fetchPosts = () => {
-  fetch("http://localhost:5000/api/posts/posts", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  })
-    .then((res) => res.json())
-    .then((resJson) => {
-      console.log("📥 Raw posts response:", resJson);
-      console.log("📥 resJson.data isArray?", Array.isArray(resJson.data));
-      setPosts(Array.isArray(resJson.data?.data) ? resJson.data.data : []);
-    })
-    .catch((err) => {
-      console.error("Error fetching posts:", err);
-      setPosts([]);
-      showError("Failed to fetch posts.");
-    });
-};
-
-  useEffect(() => {
-    fetchPosts();
-  }, []);
-
   const showMessage = (text, duration = 2000) => {
     setMessage(text);
     setTimeout(() => setMessage(null), duration);
@@ -39,6 +16,29 @@ const fetchPosts = () => {
     setError(text);
     setTimeout(() => setError(null), duration);
   };
+
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/posts/posts", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      const resJson = await res.json();
+      const data = Array.isArray(resJson?.data?.data)
+        ? resJson.data.data
+        : resJson?.data || [];
+      setPosts(data);
+    } catch (err) {
+      console.error("Error fetching posts:", err);
+      setPosts([]);
+      showError("Failed to fetch posts.");
+    }
+  };
+
+  useEffect(() => {
+    fetchPosts();
+  }, []);
 
   const handleDelete = async (postId) => {
     try {
@@ -74,10 +74,6 @@ const fetchPosts = () => {
     }
   };
 
-  const handleEdit = (postId) => {
-    navigate(`/edit/${postId}`);
-  };
-
   return (
     <main className="p-6 max-w-4xl mx-auto">
       <div className="flex justify-between items-center mb-6">
@@ -102,7 +98,6 @@ const fetchPosts = () => {
           {message}
         </div>
       )}
-
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-800 border border-red-400 rounded">
           {error}
@@ -127,7 +122,7 @@ const fetchPosts = () => {
               <div className="space-x-2">
                 <button
                   className="text-sm px-3 py-1 bg-blue-600 text-white rounded"
-                  onClick={() => handleEdit(post.id)}
+                  onClick={() => navigate(`/edit/${post.id}`)}
                 >
                   Edit
                 </button>
