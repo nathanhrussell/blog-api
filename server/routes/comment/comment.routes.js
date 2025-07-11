@@ -3,7 +3,7 @@ import {
   getCommentsByPost,
   createComment,
   deleteComment,
-  updateComment
+  updateComment,
 } from "../../controllers/comment/comment.controller.js";
 
 import {
@@ -18,5 +18,6 @@ router.post("/posts/:id/comments", createComment);
 
 router.delete("/comments/:id", authenticateUser, requireAuthorRole, deleteComment);
 router.put("/comments/:id", authenticateUser, requireAuthorRole, updateComment);
+
 
 export default router;

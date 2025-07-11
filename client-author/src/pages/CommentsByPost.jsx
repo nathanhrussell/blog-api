@@ -5,7 +5,7 @@ function CommentsByPost() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/posts-with-comments", {
+    fetch("http://localhost:5000/api/posts/posts-with-comments", {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },

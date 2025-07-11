@@ -10,6 +10,8 @@ import {
     getPostById
 } from "../../controllers/post/post.controller.js";
 
+import { getPostsWithCommentsByAuthor } from "../../controllers/comment/comment.controller.js";
+
 import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.middleware.js";
 
 const router = express.Router();
@@ -25,5 +27,6 @@ router.put("/:id", authenticateUser, requireAuthorRole, updatePost);
 router.delete("/:id", authenticateUser, requireAuthorRole, deletePost);
 router.patch("/:id/publish", authenticateUser, requireAuthorRole, togglePublish);
 
+router.get("/posts-with-comments", authenticateUser, getPostsWithCommentsByAuthor);
 
 export default router;

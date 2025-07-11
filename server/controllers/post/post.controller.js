@@ -11,16 +11,27 @@ export async function getAllPublished(req, res) {
 
   res.json({ data: posts });
 }
-
 export async function getPublishedById(req, res) {
-  const post = await prisma.post.findFirst({
-    where: { id: parseInt(req.params.id), published: true },
-    include: { author: true, comments: true },
-  });
+  const postId = parseInt(req.params.id);
+  if (isNaN(postId)) {
+    return res.status(400).json({ error: "Invalid post ID" });
+  }
 
-  if (!post) return res.status(404).json({ error: "Post not found" });
+  try {
+    const post = await prisma.post.findFirst({
+      where: { id: postId, published: true },
+      include: { author: true, comments: true },
+    });
 
-  res.json({ data: post });
+    if (!post) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    res.json({ data: post });
+  } catch (err) {
+    console.error("Error in getPublishedById:", err);
+    res.status(500).json({ error: "Server error" });
+  }
 }
 
 export async function createPost(req, res) {
