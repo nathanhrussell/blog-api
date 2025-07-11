@@ -14,6 +14,9 @@ import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.midd
 
 const router = express.Router();
 
+router.get("/posts", authenticateUser, getAllByAuthor);
+router.get("/posts/:id", authenticateUser, getPostById);
+
 router.get("/", getAllPublished);
 router.get("/:id", getPublishedById);
 
@@ -22,7 +25,5 @@ router.put("/:id", authenticateUser, requireAuthorRole, updatePost);
 router.delete("/:id", authenticateUser, requireAuthorRole, deletePost);
 router.patch("/:id/publish", authenticateUser, requireAuthorRole, togglePublish);
 
-router.get("/posts", authenticateUser, getAllByAuthor);
-router.get("/posts/:id", authenticateUser, getPostById);
 
 export default router;

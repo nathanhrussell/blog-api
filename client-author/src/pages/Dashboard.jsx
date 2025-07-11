@@ -7,22 +7,24 @@ function Dashboard({ onLogout }) {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const fetchPosts = () => {
-    fetch("http://localhost:5000/api/posts", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
+const fetchPosts = () => {
+  fetch("http://localhost:5000/api/posts/posts", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((resJson) => {
+      console.log("📥 Raw posts response:", resJson);
+      console.log("📥 resJson.data isArray?", Array.isArray(resJson.data));
+      setPosts(Array.isArray(resJson.data?.data) ? resJson.data.data : []);
     })
-      .then((res) => res.json())
-      .then((resJson) => {
-        setPosts(Array.isArray(resJson.data) ? resJson.data : []);
-      })
-      .catch((err) => {
-        console.error("Error fetching posts:", err);
-        setPosts([]);
-        showError("Failed to fetch posts.");
-      });
-  };
+    .catch((err) => {
+      console.error("Error fetching posts:", err);
+      setPosts([]);
+      showError("Failed to fetch posts.");
+    });
+};
 
   useEffect(() => {
     fetchPosts();
@@ -107,7 +109,7 @@ function Dashboard({ onLogout }) {
         </div>
       )}
 
-      {!posts || posts.length === 0 ? (
+      {Array.isArray(posts) && posts.length === 0 ? (
         <p>No posts yet.</p>
       ) : (
         <ul className="space-y-4">
