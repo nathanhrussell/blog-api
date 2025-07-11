@@ -71,13 +71,11 @@ export async function togglePublish(req, res) {
 }
 
 export async function getAllByAuthor(req, res) {
-  console.log("🔐 Author ID from token:", req.user.id);
   const posts = await prisma.post.findMany({
     where: { authorId: req.user.id },
     orderBy: { createdAt: "desc" },
   });
 
-  console.log("📝 Posts returned:", posts);
   res.json({ data: posts });
 }
 
