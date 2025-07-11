@@ -38,7 +38,10 @@ function PostPage() {
           {post.title}
         </h1>
       </Link>
-      <p>{post.content}</p>
+      <div
+        className="prose max-w-none prose-headings:font-bold prose-p:my-4 prose-ul:my-4 prose-ol:my-4 prose-blockquote:border-l-4 prose-blockquote:border-gray-300 prose-blockquote:pl-4 prose-blockquote:italic prose-code:bg-gray-100 prose-code:px-1 prose-code:rounded prose-code:text-sm prose-pre:bg-gray-800 prose-pre:text-gray-100 prose-pre:p-4 prose-pre:rounded prose-pre:overflow-x-auto prose-a:text-blue-600 prose-a:hover:underline prose-img:rounded prose-img:shadow"
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
       <section className="mt-8">
         <h2 className="text-xl font-semibold mb-2">Comments</h2>
         {comments.length === 0 ? (

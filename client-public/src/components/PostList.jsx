@@ -38,7 +38,10 @@ useEffect(() => {
         {post.title}
       </h2>
     </Link>
-          <p className="text-gray-600">{post.content.slice(0, 100)}...</p>
+          <div
+            className="prose prose-sm text-gray-600 max-w-none"
+            dangerouslySetInnerHTML={{ __html: post.content.slice(0, 100) + '...' }}
+          />
           <Link to={`/posts/${post.id}`} className="text-blue-500 underline">
             Read more
           </Link>
