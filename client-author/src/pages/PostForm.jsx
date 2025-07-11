@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
+import TiptapEditor from "./TiptapEditor";
 
 function PostForm({ mode, postId = null }) {
   const navigate = useNavigate();
@@ -11,24 +10,35 @@ function PostForm({ mode, postId = null }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (mode === "edit" && postId) {
-      fetch(`http://localhost:5000/api/posts/${postId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.error) {
-            setError(data.error);
-          } else {
-            setTitle(data.title || "");
-            setContent(data.content || "");
-          }
-        })
-        .catch(() => setError("Failed to load post."))
-        .finally(() => setLoading(false));
-    }
+    if (mode !== "edit" || !postId) return;
+
+    const loadPost = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/posts/posts/${postId}`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+
+        const resJson = await res.json();
+        const data = resJson.data || resJson;
+
+        console.log("✏️ Loaded post data:", data);
+
+        if (data.error) {
+          setError(data.error);
+        } else {
+          setTitle(data.title || "");
+          setContent(data.content || "");
+        }
+      } catch {
+        setError("Failed to load post.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadPost();
   }, [mode, postId]);
 
   const handleSubmit = async (e) => {
@@ -39,13 +49,11 @@ function PostForm({ mode, postId = null }) {
       return;
     }
 
-    setError(null);
     const payload = { title, content };
     const url =
       mode === "edit"
         ? `http://localhost:5000/api/posts/${postId}`
         : "http://localhost:5000/api/posts";
-
     const method = mode === "edit" ? "PUT" : "POST";
 
     try {
@@ -97,7 +105,7 @@ function PostForm({ mode, postId = null }) {
 
         <div>
           <label className="block font-semibold mb-1">Content</label>
-          <ReactQuill value={content} onChange={setContent} />
+          <TiptapEditor content={content} onChange={setContent} />
         </div>
 
         <button
