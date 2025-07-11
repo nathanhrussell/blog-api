@@ -30,6 +30,7 @@ function App() {
         <Route path="/new" element={<NewPost />} />
         <Route path="/edit/:id" element={<EditPost />} />
         <Route path="/posts/:id" element={<PostDetail />} />
+        <Route path="/comments-by-post" element={<CommentsByPost />} />
       </Routes>
     </BrowserRouter>
   );
