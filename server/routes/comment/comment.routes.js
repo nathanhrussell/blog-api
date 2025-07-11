@@ -1,12 +1,15 @@
 import express from "express";
 import {
-    getCommentsByPost,
-    createComment,
-    deleteComment,
-    updateComment
+  getCommentsByPost,
+  createComment,
+  deleteComment,
+  updateComment
 } from "../../controllers/comment/comment.controller.js";
 
-import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.middleware.js";
+import {
+  authenticateUser,
+  requireAuthorRole
+} from "../../middlewares/auth.middleware.js";
 
 const router = express.Router();
 

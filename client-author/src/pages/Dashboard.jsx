@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Dashboard({ onLogout }) {
   const [posts, setPosts] = useState([]);
@@ -92,6 +93,13 @@ function Dashboard({ onLogout }) {
       >
         ➕ New Post
       </button>
+
+      <Link
+  to="/comments-by-post"
+  className="inline-block mb-6 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+>
+  💬 View Comments by Post
+</Link>
 
       {message && (
         <div className="mb-4 p-3 bg-green-100 text-green-800 border border-green-400 rounded">

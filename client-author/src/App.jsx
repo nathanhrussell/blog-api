@@ -5,6 +5,7 @@ import Dashboard from "./pages/Dashboard";
 import NewPost from "./pages/NewPost";
 import EditPost from "./pages/EditPost";
 import PostDetail from "../../client-public/src/pages/PostDetail";
+import CommentsByPost from "./pages/CommentsByPost";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));

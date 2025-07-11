@@ -70,3 +70,37 @@ export async function updateComment(req, res) {
 
   res.json(updated);
 }
+
+export async function getPostsWithCommentsByAuthor(req, res) {
+  const authorId = req.user.id;
+
+  try {
+    const posts = await prisma.post.findMany({
+      where: { authorId },
+      include: {
+        comments: {
+          include: {
+            user: true,
+          },
+          orderBy: { createdAt: "desc" },
+        },
+      },
+    });
+
+    const data = posts.map((post) => ({
+      id: post.id,
+      title: post.title,
+      comments: post.comments.map((comment) => ({
+        id: comment.id,
+        content: comment.content,
+        username: comment.user?.username || "Anonymous",
+        createdAt: comment.createdAt,
+      })),
+    }));
+
+    res.json({ data });
+  } catch (err) {
+    console.error("Failed to fetch posts with comments:", err);
+    res.status(500).json({ error: "Server error" });
+  }
+}

@@ -1,17 +1,26 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 
 function CommentsByPost() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get("/api/author/posts-with-comments", {
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+    fetch("http://localhost:5000/api/posts-with-comments", {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((resJson) => {
+        const data = Array.isArray(resJson?.data?.data)
+          ? resJson.data.data
+          : resJson?.data || [];
+        setPosts(data);
       })
-      .then((res) => setPosts(res.data))
-      .catch((err) => console.error(err))
+      .catch((err) => {
+        console.error("Failed to fetch posts with comments:", err);
+        setPosts([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
