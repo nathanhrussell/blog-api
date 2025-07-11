@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import NewPost from "./pages/NewPost";
 import EditPost from "./pages/EditPost";
+import PostDetail from "../../client-public/src/pages/PostDetail";
 
 function App() {
   const [token, setToken] = useState(localStorage.getItem("token"));
@@ -28,7 +29,7 @@ function App() {
         <Route path="/" element={<Dashboard onLogout={handleLogout} />} />
         <Route path="/new" element={<NewPost />} />
         <Route path="/edit/:id" element={<EditPost />} />
-        <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
       </Routes>
     </BrowserRouter>
   );
