@@ -6,11 +6,11 @@ import {
     updatePost,
     deletePost,
     togglePublish,
-    getAllByAuthor
+    getAllByAuthor,
+    getPostById
 } from "../../controllers/post/post.controller.js";
 
 import { authenticateUser, requireAuthorRole } from "../../middlewares/auth.middleware.js";
-import { getPostById } from "../controllers/post.controller.js";
 
 const router = express.Router();
 
