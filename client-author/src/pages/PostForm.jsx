@@ -21,9 +21,16 @@ function PostForm({ mode, postId = null }) {
         });
 
         const resJson = await res.json();
-        const data = resJson.data || resJson;
+        console.log("✏️ Full response:", resJson);
 
-        console.log("✏️ Loaded post data:", data);
+        let data;
+        if (resJson.data) {
+          data = resJson.data.data || resJson.data;
+        } else {
+          data = resJson;
+        }
+
+        console.log("✏️ Processed post data:", data);
 
         if (data.error) {
           setError(data.error);
@@ -31,7 +38,8 @@ function PostForm({ mode, postId = null }) {
           setTitle(data.title || "");
           setContent(data.content || "");
         }
-      } catch {
+      } catch (err) {
+        console.error("Error loading post:", err);
         setError("Failed to load post.");
       } finally {
         setLoading(false);
