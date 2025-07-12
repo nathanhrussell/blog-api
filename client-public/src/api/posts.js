@@ -18,3 +18,16 @@ export async function getCommentsByPostId(postId) {
     if (!res.ok) throw new Error("Failed to fetch comments");
     return res.json();
 }
+
+export async function getPostsWithCommentsForAuthor() {
+  const res = await fetch("http://localhost:5000/api/author/posts-with-comments", {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+  if (!res.ok) throw new Error("Failed to fetch posts with comments");
+  const json = await res.json();
+  return Array.isArray(json?.data?.data)
+    ? json.data.data
+    : json?.data || [];
+}
