@@ -14,7 +14,7 @@ function PostForm({ mode, postId = null }) {
 
     const loadPost = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/posts/posts/${postId}`, {
+        const res = await fetch(`http://localhost:5000/api/posts/${postId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

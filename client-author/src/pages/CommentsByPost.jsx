@@ -11,7 +11,7 @@ function CommentsByPost() {
         console.log("Starting to fetch posts...");
         
         // Fetch the author's posts
-        const postsResponse = await fetch("http://localhost:5000/api/posts/posts", {
+        const postsResponse = await fetch("http://localhost:5000/api/posts", {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
