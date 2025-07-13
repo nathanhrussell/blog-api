@@ -18,8 +18,14 @@ function Login({ onLogin }) {
     console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
     console.log("All env vars:", import.meta.env);
     
-    const apiUrl = import.meta.env.VITE_API_URL;
-    const fullUrl = `${apiUrl}/auth/login`;
+    // Temporary hardcode since .env is in .gitignore
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://blog-api-cg35.onrender.com';
+    console.log("Raw API URL from env:", import.meta.env.VITE_API_URL);
+    
+    // Remove trailing slash from apiUrl if it exists, then add the endpoint
+    const cleanApiUrl = apiUrl.endsWith('/') ? apiUrl.slice(0, -1) : apiUrl;
+    const fullUrl = `${cleanApiUrl}/api/auth/login`; // Added /api prefix
+    console.log("Clean API URL:", cleanApiUrl);
     console.log("Full URL being called:", fullUrl);
 
     try {
