@@ -1,0 +1,73 @@
+.
+├── README.md
+├── TODO.md
+├── client-author
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── scripts
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── assets
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   └── pages
+│   └── vite.config.js
+├── client-public
+│   ├── README.md
+│   ├── eslint.config.js
+│   ├── index.html
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── public
+│   │   └── vite.svg
+│   ├── src
+│   │   ├── App.css
+│   │   ├── App.jsx
+│   │   ├── api
+│   │   ├── assets
+│   │   ├── components
+│   │   ├── hooks
+│   │   ├── index.css
+│   │   ├── main.jsx
+│   │   └── pages
+│   └── vite.config.js
+├── middlewares
+│   ├── errorHandler.mjs
+│   ├── formatResponse.mjs
+│   └── validate.mjs
+├── package-lock.json
+├── package.json
+├── project-structure.txt
+├── scripts
+├── server
+│   ├── controllers
+│   │   ├── auth
+│   │   ├── comment
+│   │   └── post
+│   ├── hash-password.mjs
+│   ├── index.js
+│   ├── middlewares
+│   │   └── auth.middleware.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── prisma
+│   │   ├── migrations
+│   │   ├── schema.prisma
+│   │   └── seed.js
+│   ├── routes
+│   │   ├── auth
+│   │   ├── comment
+│   │   └── post
+│   ├── scripts
+│   ├── touch
+│   └── utils
+│       └── jwt.js
+└── utils
+
+32 directories, 38 files
