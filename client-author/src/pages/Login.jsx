@@ -13,9 +13,17 @@ function Login({ onLogin }) {
 
     const loginData = { username, password };
     console.log("Sending login data:", loginData);
+    
+    // Debug environment variable
+    console.log("VITE_API_URL:", import.meta.env.VITE_API_URL);
+    console.log("All env vars:", import.meta.env);
+    
+    const apiUrl = import.meta.env.VITE_API_URL;
+    const fullUrl = `${apiUrl}/auth/login`;
+    console.log("Full URL being called:", fullUrl);
 
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      const res = await fetch(fullUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(loginData),
@@ -23,6 +31,18 @@ function Login({ onLogin }) {
 
       console.log("Response status:", res.status);
       console.log("Response headers:", res.headers);
+      console.log("Response URL:", res.url);
+
+      // Check if response is actually JSON
+      const contentType = res.headers.get('content-type');
+      console.log("Content-Type:", contentType);
+      
+      if (!contentType || !contentType.includes('application/json')) {
+        // If it's not JSON, get the text to see what we're actually receiving
+        const text = await res.text();
+        console.log("Response text (not JSON):", text);
+        throw new Error(`Server returned ${res.status}: Expected JSON but got ${contentType}`);
+      }
 
       const data = await res.json();
       console.log("Login response data:", data);
