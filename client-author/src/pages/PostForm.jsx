@@ -53,7 +53,7 @@ function PostForm({ mode, postId = null }) {
     const url =
       mode === "edit"
         ? `${getApiEndpoint("/api")}/posts/${postId}`
-        : "${getApiEndpoint('/api')}/posts";
+        : `${getApiEndpoint("/api")}/posts`;
     const method = mode === "edit" ? "PUT" : "POST";
 
     try {
