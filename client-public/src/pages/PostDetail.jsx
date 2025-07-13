@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { getApiEndpoint } from "../utils/api.js";
 
 function PostDetail() {
   const { id } = useParams();
@@ -14,7 +15,7 @@ function PostDetail() {
 
   // Fetch post
   useEffect(() => {
-    fetch(`http://localhost:5000/api/posts/${id}`)
+    fetch(`${getApiEndpoint("/api")}/posts/${id}`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Post API response:", data); // Debug log
@@ -34,7 +35,7 @@ function PostDetail() {
 
   // Fetch comments
   useEffect(() => {
-    fetch(`http://localhost:5000/api/posts/${id}/comments`)
+    fetch(`${getApiEndpoint("/api")}/posts/${id}/comments`)
       .then((res) => res.json())
       .then((data) => {
         setComments(Array.isArray(data) ? data : []);
@@ -52,7 +53,7 @@ function PostDetail() {
     if (!username.trim() || !commentContent.trim()) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/posts/${id}/comments`, {
+      const res = await fetch(`${getApiEndpoint("/api")}/posts/${id}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content: commentContent }),

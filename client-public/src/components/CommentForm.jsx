@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { getApiEndpoint } from "../utils/api.js";
 
 function CommentForm({ postId, onCommentSubmitted }) {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ function CommentForm({ postId, onCommentSubmitted }) {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/posts/${postId}/comments`, {
+      const res = await fetch(`${getApiEndpoint("/api")}/posts/${postId}/comments`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, content }),

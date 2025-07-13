@@ -1,5 +1,6 @@
 // client-public/src/components/CommentList.jsx
 import { useEffect, useState } from "react";
+import { getApiEndpoint } from "../utils/api.js";
 
 function CommentList({ postId }) {
   const [comments, setComments] = useState([]);
@@ -7,7 +8,7 @@ function CommentList({ postId }) {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/api/posts/${postId}/comments`)
+    fetch(`${getApiEndpoint("/api")}/posts/${postId}/comments`)
       .then(res => res.json())
       .then(data => setComments(data))
       .catch(() => setError("Failed to load comments"))

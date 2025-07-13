@@ -1,4 +1,6 @@
-const API_URL = "http://localhost:5000/api/posts";
+import { getApiEndpoint } from "../utils/api.js";
+
+const API_URL = "${getApiEndpoint('/api')}/posts";
 
 export async function getPublishedPosts() {
     const res = await fetch(API_URL);
@@ -7,20 +9,20 @@ export async function getPublishedPosts() {
 }
 
 export async function getPostById(postId) {
-  const res = await fetch(`http://localhost:5000/api/posts/${postId}`);
+  const res = await fetch(`${getApiEndpoint("/api")}/posts/${postId}`);
   if (!res.ok) throw new Error("Failed to fetch post");
   const json = await res.json();
   return json.data;
 }
 
 export async function getCommentsByPostId(postId) {
-    const res = await fetch(`http://localhost:5000/api/posts/${postId}/comments`);
+    const res = await fetch(`${getApiEndpoint("/api")}/posts/${postId}/comments`);
     if (!res.ok) throw new Error("Failed to fetch comments");
     return res.json();
 }
 
 export async function getPostsWithCommentsForAuthor() {
-  const res = await fetch("http://localhost:5000/api/author/posts-with-comments", {
+  const res = await fetch("${getApiEndpoint('/api')}/author/posts-with-comments", {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },

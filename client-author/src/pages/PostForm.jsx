@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TiptapEditor from "./TiptapEditor";
+import { getApiEndpoint } from "../utils/api.js";
 
 function PostForm({ mode, postId = null }) {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ function PostForm({ mode, postId = null }) {
 
     const loadPost = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+        const res = await fetch(`${getApiEndpoint("/api")}/posts/${postId}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -51,8 +52,8 @@ function PostForm({ mode, postId = null }) {
     const payload = { title, content };
     const url =
       mode === "edit"
-        ? `http://localhost:5000/api/posts/${postId}`
-        : "http://localhost:5000/api/posts";
+        ? `${getApiEndpoint("/api")}/posts/${postId}`
+        : "${getApiEndpoint('/api')}/posts";
     const method = mode === "edit" ? "PUT" : "POST";
 
     try {

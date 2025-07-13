@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { getApiEndpoint } from "../utils/api.js";
 
 function Dashboard({ onLogout }) {
   const [posts, setPosts] = useState([]);
@@ -20,7 +21,7 @@ function Dashboard({ onLogout }) {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/posts", {
+      const res = await fetch("${getApiEndpoint('/api')}/posts", {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -43,7 +44,7 @@ function Dashboard({ onLogout }) {
 
   const handleDelete = async (postId) => {
     try {
-      await fetch(`http://localhost:5000/api/posts/${postId}`, {
+      await fetch(`${getApiEndpoint("/api")}/posts/${postId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -59,7 +60,7 @@ function Dashboard({ onLogout }) {
 
   const handleTogglePublish = async (post) => {
     try {
-      await fetch(`http://localhost:5000/api/posts/${post.id}/publish`, {
+      await fetch(`${getApiEndpoint("/api")}/posts/${post.id}/publish`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
