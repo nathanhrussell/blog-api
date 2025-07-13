@@ -21,7 +21,7 @@ function Dashboard({ onLogout }) {
 
   const fetchPosts = async () => {
     try {
-      const res = await fetch("${getApiEndpoint('/api')}/posts", {
+      const res = await fetch(`${getApiEndpoint("/api")}/posts`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

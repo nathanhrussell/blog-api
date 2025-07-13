@@ -1,6 +1,6 @@
 import { getApiEndpoint } from "../utils/api.js";
 
-const API_URL = "${getApiEndpoint('/api')}/posts";
+const API_URL = `${getApiEndpoint("/api")}/posts`;
 
 export async function getPublishedPosts() {
     const res = await fetch(API_URL);
@@ -22,7 +22,7 @@ export async function getCommentsByPostId(postId) {
 }
 
 export async function getPostsWithCommentsForAuthor() {
-  const res = await fetch("${getApiEndpoint('/api')}/author/posts-with-comments", {
+  const res = await fetch(`${getApiEndpoint("/api")}/author/posts-with-comments`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
