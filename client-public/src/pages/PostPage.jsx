@@ -13,7 +13,7 @@ function PostPage() {
     getPostById(id)
       .then(data => {
         console.log("Fetched post:", data);
-        setPost(data.data); // Extract post from data.data
+        setPost(data); // Fixed: removed .data since getPostById already returns the extracted data
       })
       .catch(console.error);
 
