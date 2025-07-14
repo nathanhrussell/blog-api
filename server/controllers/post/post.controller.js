@@ -9,7 +9,7 @@ export async function getAllPublished(req, res) {
     orderBy: { createdAt: "desc" },
   });
 
-  res.json({ data: posts });
+  res.json(posts);
 }
 export async function getPublishedById(req, res) {
   const postId = parseInt(req.params.id);
@@ -27,7 +27,7 @@ export async function getPublishedById(req, res) {
       return res.status(404).json({ error: "Post not found" });
     }
 
-    res.json({ data: post });
+    res.json(post);
   } catch (err) {
     console.error("Error in getPublishedById:", err);
     res.status(500).json({ error: "Server error" });
@@ -58,7 +58,7 @@ export async function updatePost(req, res) {
     data: { title, content },
   });
 
-  res.json({ data: post });
+  res.json(post);
 }
 
 export async function deletePost(req, res) {
@@ -78,7 +78,7 @@ export async function togglePublish(req, res) {
     data: { published },
   });
 
-  res.json({ data: post });
+  res.json({post});
 }
 
 export async function getAllByAuthor(req, res) {
@@ -87,7 +87,7 @@ export async function getAllByAuthor(req, res) {
     orderBy: { createdAt: "desc" },
   });
 
-  res.json({ data: posts });
+  res.json(posts);
 }
 
 // PRIVATE: Get a post by ID for the author
@@ -104,5 +104,5 @@ export async function getPostById(req, res) {
 
   if (!post) return res.status(404).json({ error: "Post not found" });
 
-  res.json({ data: post });
+  res.json(post);
 }
