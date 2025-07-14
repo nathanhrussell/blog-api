@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { getApiEndpoint } from "../utils/api.js";
 
 function CommentsByPost() {
   const [posts, setPosts] = useState([]);
@@ -19,7 +20,7 @@ function CommentsByPost() {
   useEffect(() => {
     const fetchPostsWithComments = async () => {
       try {
-        const postsResponse = await fetch("http://localhost:5000/api/posts", {
+        const postsResponse = await fetch(`${getApiEndpoint("/api")}/posts`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
@@ -47,7 +48,7 @@ function CommentsByPost() {
           postsData.map(async (post) => {
             try {
               const commentsResponse = await fetch(
-                `http://localhost:5000/api/posts/${post.id}/comments`,
+                `${getApiEndpoint("/api")}/posts/${post.id}/comments`,
                 {
                   headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -90,7 +91,7 @@ function CommentsByPost() {
     if (!confirm("Are you sure you want to delete this comment?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/comments/${commentId}`, {
+      const res = await fetch(`${getApiEndpoint("/api")}/comments/${commentId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
